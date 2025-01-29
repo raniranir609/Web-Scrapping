@@ -1,0 +1,131 @@
+import numpy as np
+import pandas as pd
+
+import requests
+from bs4 import BeautifulSoup
+     
+
+# Identify the URL
+
+URL = "https://timely-sunshine-e821b3.netlify.app/"
+     
+
+# Loading the WebPage in Memory using requests library
+
+page = requests.get(URL)
+
+     
+
+# Check the Status Code of the Page
+
+page.status_code
+
+     
+200
+
+# Extracting the HTML Code of the WebPage
+
+htmlCode = page.text
+soup = BeautifulSoup(htmlCode)
+     
+
+htmlCode
+     
+'<html>\r\n    <head>\r\n        <style>\r\n            .header{\r\n                height : 100px;\r\n                background-color: bisque;\r\n                box-shadow: 0px 10px 10px black;\r\n            }\r\n            .header p{\r\n                font-family: \'Lucida Sans\', \'Lucida Sans Regular\', \'Lucida Grande\', \'Lucida Sans Unicode\', Geneva, Verdana, sans-serif;\r\n                font-weight: bold;\r\n                font-size: 70px;\r\n                text-align: center;\r\n                padding-top:10px;\r\n            }\r\n            .main{\r\n                background-color: rgb(189, 234, 234);\r\n                display: flex;\r\n                flex-wrap: wrap;\r\n                justify-content: space-between;\r\n            }\r\n            img{\r\n                width : 100%;\r\n                height : 100%;\r\n            }\r\n            .main{\r\n                margin-top:20px;\r\n            }\r\n            .a{\r\n                height : 300px;\r\n                width : 250px;\r\n                background-color: burlywood;\r\n                padding : 10px;\r\n                margin:10px;\r\n            }\r\n            .a .image{\r\n                height : 250px;\r\n            }\r\n            .a .name{\r\n                font-family: Georgia, \'Times New Roman\', Times, serif;\r\n                text-align: center;\r\n                padding-top:10px;\r\n            }\r\n            .a .name::before{\r\n                content: "Name: ";\r\n            }\r\n            .a .price{\r\n                font-family: Georgia, \'Times New Roman\', Times, serif;\r\n                text-align: center;\r\n                padding-top:5px;\r\n            }\r\n            .a .price::before{\r\n                content: "Price: "\r\n            }\r\n        </style>\r\n    </head>\r\n    <body>\r\n        <div class="header">\r\n            <p>Webscrapping Example</p>\r\n        </div>\r\n        <div class="main">\r\n            <div class="a">\r\n                <div class="image">\r\n                    <img src="toy.png">\r\n                </div>\r\n                <div class="name">\r\n                    Robot 1\r\n                </div>\r\n                <div class="price">\r\n                    100\r\n                </div>\r\n            </div>\r\n            <div class="a">\r\n                <div class="image">\r\n                    <img src="toy2.png">\r\n                </div>\r\n                <div class="name">\r\n                    Teddy 1\r\n                </div>\r\n                <div class="price">\r\n                    120\r\n                </div>\r\n            </div>\r\n            <div class="a">\r\n                <div class="image">\r\n                    <img src="toy3.png">\r\n                </div>\r\n                <div class="name">\r\n                    Car 1\r\n                </div>\r\n                <div class="price">\r\n                    99\r\n                </div>\r\n            </div>\r\n            <div class="a">\r\n                <div class="image">\r\n                    <img src="toy.png">\r\n                </div>\r\n                <div class="name">\r\n                    Robot 2\r\n                </div>\r\n                <div class="price">\r\n                    200\r\n                </div>\r\n            </div>\r\n            <div class="a">\r\n                <div class="image">\r\n                    <img src="toy2.png">\r\n                </div>\r\n                <div class="name">\r\n                    Teddy 2\r\n                </div>\r\n                <div class="price">\r\n                    220\r\n                </div>\r\n            </div>\r\n            <div class="a">\r\n                <div class="image">\r\n                    <img src="toy3.png">\r\n                </div>\r\n                <div class="name">\r\n                    Car 2\r\n                </div>\r\n                <div class="price">\r\n                    199\r\n                </div>\r\n            </div>\r\n            <div class="a">\r\n                <div class="image">\r\n                    <img src="toy.png">\r\n                </div>\r\n                <div class="name">\r\n                    Robot 3\r\n                </div>\r\n                <div class="price">\r\n                    300\r\n                </div>\r\n            </div>\r\n            <div class="a">\r\n                <div class="image">\r\n                    <img src="toy2.png">\r\n                </div>\r\n                <div class="name">\r\n                    Teddy 3\r\n                </div>\r\n                <div class="price">\r\n                    220\r\n                </div>\r\n            </div>\r\n            <div class="a">\r\n                <div class="image">\r\n                    <img src="toy3.png">\r\n                </div>\r\n                <div class="name">\r\n                    Car 3\r\n                </div>\r\n                <div class="price">\r\n                    299\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </body>\r\n</html>'
+
+ content = soup.find('div', attrs={'class' : 'name'})
+ text = content.text
+ print(text)
+     
+                    Robot 1
+                
+Robot 1
+
+ content = soup.find('div', attrs={'class' : 'name'})
+ text = content.text.strip()
+ print(text)
+     
+Robot 1
+
+ content = soup.find('div', attrs={'class' : 'price'})
+ text = content.text
+ print(text)
+     
+                    100
+                
+
+ content = soup.find('div', attrs={'class' : 'price'})
+ text = content.text.strip()
+ print(text)
+     
+100
+
+content = soup.find('div', attrs={'class' : 'main'})
+text=content.text
+r1 = text.split("\n")
+#print(r1)
+r2 = []
+for i in r1:
+  if i != '' and i != '\r':
+    r2.append(i)
+#print(r2)
+r3 = []
+for i in r2:
+  k = i.strip()
+  r3.append(k)
+#print(r3)
+r4 = []
+for i in r3:
+  if i != '':
+    r4.append(i)
+#print(r4)
+names = []
+prices = []
+for i in range(0,len(r4),2):
+  names.append(r4[i])
+  prices.append(r4[i+1])
+print(names)
+print(prices)
+
+     
+['Robot 1', 'Teddy 1', 'Car 1', 'Robot 2', 'Teddy 2', 'Car 2', 'Robot 3', 'Teddy 3', 'Car 3']
+['100', '120', '99', '200', '220', '199', '300', '220', '299']
+Create a DataFrame and save it in CSV file
+
+df = pd.DataFrame({'Product_Name' : names,'MRP' : prices})
+     
+
+df
+     
+Product_Name	MRP
+0	Robot 1	100
+1	Teddy 1	120
+2	Car 1	99
+3	Robot 2	200
+4	Teddy 2	220
+5	Car 2	199
+6	Robot 3	300
+7	Teddy 3	220
+8	Car 3	299
+
+df.shape
+     
+(9, 2)
+
+df.head()
+     
+Product_Name	MRP
+0	Robot 1	100
+1	Teddy 1	120
+2	Car 1	99
+3	Robot 2	200
+4	Teddy 2	220
+
+# saving the dataframe
+df.to_csv('sample.csv', header=True, index=False)
+
+     
+
+from google.colab import files
+files.download('sample.csv')
+     
